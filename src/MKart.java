@@ -15,15 +15,15 @@ public class MKart {
         Products products = new Products();
         products.setProductList(new ArrayList<Product>());
 
-        // Parser
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Enter Appliance Details :");
-        Document page = Jsoup.connect("https://www.amazon.in/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=" + scan.next()).get();
-
-        Elements eachElement = page.getElementsByAttribute("class");
-        for (Element item : eachElement)
-            System.out.println(item.text());
-
-        XMLJavaReadWriters.write("Products", products, "D:\\product.xml");
+//        // Parser
+//        Scanner scan = new Scanner(System.in);
+//        System.out.println("Enter Appliance Details :");
+//        Document page = Jsoup.connect("https://www.amazon.in/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=" + scan.next()).get();
+//
+//        Elements eachElement = page.getElementsByAttribute("class");
+//        for (Element item : eachElement)
+//            System.out.println(item.text());
+//
+//        XMLJavaReadWriters.write("Products", products, "D:\\product.xml");
     }
 }
