@@ -4,6 +4,11 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
+/**
+ * Class    : Products
+ * Purpose  : Holding List of Product class objects.
+ *            Thus easy way to write to XML file.
+ */
 @XmlRootElement(name = "products")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Products {
@@ -21,6 +26,10 @@ public class Products {
     }
 }
 
+/**
+ * Class    : Product
+ * Purpose  : All attributes & methods of Product class.
+ */
 @XmlRootElement(name = "product")
 @XmlAccessorType(XmlAccessType.FIELD)
 class Product {
