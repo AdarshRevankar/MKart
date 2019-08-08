@@ -27,6 +27,7 @@ public class Products {
     public void setProductList(List<Product> productList) {
         this.productList = productList;
     }
+
 }
 
 /**
@@ -37,14 +38,13 @@ public class Products {
 @XmlAccessorType(XmlAccessType.FIELD)
 class Product {
     private String name, brand, desc;
-    private int price, id;
+    private int price;
     Product(){}
-    public Product(String name, String brand, String desc, int price, int id) {
+    public Product(String name, String brand, String desc, int price) {
         this.name = name;
         this.brand = brand;
         this.desc = desc;
         this.price = price;
-        this.id = id;
     }
 
     public String getName() {
@@ -57,13 +57,7 @@ class Product {
 
     @Override
     public String toString() {
-        return "Product{" +
-                "name='" + name + '\'' +
-                ", brand='" + brand + '\'' +
-                ", desc='" + desc + '\'' +
-                ", price=" + price +
-                ", id=" + id +
-                '}';
+        return brand+" "+name+" | "+price+"/Month";
     }
 
     public String getBrand() {
@@ -88,14 +82,6 @@ class Product {
 
     public void setPrice(int price) {
         this.price = price;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
 }

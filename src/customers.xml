@@ -15,4 +15,9 @@
         <uname>adarsh@gmail.com</uname>
         <password>123321</password>
     </customer>
+    <customer>
+        <name>arpith</name>
+        <uname>arpith@gmail.com</uname>
+        <password>adarsh</password>
+    </customer>
 </customers>

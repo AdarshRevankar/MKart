@@ -3,8 +3,11 @@
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.*;
+import javax.xml.bind.JAXBException;
 
 public class ProductPage extends JPanel {
     private JLabel jcomp1;
@@ -17,9 +20,9 @@ public class ProductPage extends JPanel {
     private JComboBox jcomp8;
     private JMenuBar jcomp9;
 
-    public ProductPage() {
+    public ProductPage() throws FileNotFoundException, JAXBException, ClassNotFoundException {
         //construct preComponents
-        String[] jcomp3Items = {"Acer Predator Helios 300"};
+        String[] jProductList = fetchProducts();
         String[] jcomp8Items = {"30 Days", "60 Days", "120 Days", "180 Days"};
         JMenu fileMenu = new JMenu("File");
         JMenuItem printItem = new JMenuItem("Print");
@@ -35,7 +38,7 @@ public class ProductPage extends JPanel {
         //construct components
         jcomp1 = new JLabel("MITE Kart");
         jcomp2 = new JButton("Rent");
-        jcomp3 = new JList(jcomp3Items);
+        jcomp3 = new JList(jProductList);
         jcomp4 = new JLabel("Total Balance");
         jcomp5 = new JLabel("0");
         jcomp6 = new JButton("Status");
@@ -72,11 +75,23 @@ public class ProductPage extends JPanel {
         jcomp9.setBounds(-5, 0, 360, 25);
     }
 
-    static void showPage2() {
+    static void showPage2() throws FileNotFoundException, JAXBException, ClassNotFoundException {
         JFrame frame = new JFrame("Product Page");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(new ProductPage());
         frame.pack();
         frame.setVisible(true);
+    }
+
+    String[] fetchProducts() throws FileNotFoundException, JAXBException, ClassNotFoundException {
+        Products products = (Products) XMLJavaReadWriters.readFromXML("Products", System.getProperty("user.dir") + "\\src\\product.xml");
+        ArrayList<Product> lst = (ArrayList<Product>) products.getProductList();
+        String[] productStringList = new String[lst.size()];
+        int i = 0;
+        for (Product p : lst) {
+            productStringList[i] = p.toString();
+            i++;
+        }
+        return productStringList;
     }
 }
