@@ -3,16 +3,18 @@
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import javax.swing.*;
 import javax.swing.event.*;
+import javax.xml.bind.JAXBException;
 
 public class LoginPage extends JPanel {
     // Page1
-    JLabel jLabel, jLabel2, jLabel3;
-    JTextField unameTf, pswdTf;
-    JButton loginButton;
+    private JLabel jLabel, jLabel2, jLabel3;
+    private JTextField unameTf, pswdTf;
+    private JButton loginButton;
 
-    private LoginPage() {
+    LoginPage() {
         //construct components
         jLabel = new JLabel("MITE Kart");
         unameTf = new JTextField(5);
@@ -41,32 +43,51 @@ public class LoginPage extends JPanel {
         pswdTf.setBounds(145, 135, 120, 25);
         loginButton.setBounds(120, 200, 100, 25);
 
+        final Customer[] currentCustomer = {null};
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Get Credentials
                 String userName = unameTf.getText();
                 String password = pswdTf.getText();
-
-                // Check user if already exist ?
-                //if(userName.equals("adarsh") && password.equals("123"))
-                //    createAccount();
-                productsPage();
+                try {
+                    currentCustomer[0] = authCustomer(userName.split("@")[0], userName, password);
+                } catch (IOException | ClassNotFoundException | JAXBException ex) {
+                    ex.printStackTrace();
+                }
+                NextPage(currentCustomer[0]);
             }
         });
     }
 
-    private void productsPage() {
+    private void NextPage(Customer cust) {
+        System.out.println(cust);
         this.setVisible(false);
-        productPage.showPage2();
+        ProductPage.showPage2();
     }
 
 
-    public static void main(String[] args) {
+    static void start() {
         JFrame frame = new JFrame("M-Kart Rental Makes Easy");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(new LoginPage());
         frame.pack();
         frame.setVisible(true);
+    }
+
+    private static Customer authCustomer(String name, String username, String password) throws IOException, JAXBException, ClassNotFoundException {
+        Customers currentCustomers = (Customers) XMLJavaReadWriters.readFromXML("Customers", System.getProperty("user.dir") + "\\src\\customers.xml");
+        for (Customer existingCust : currentCustomers.getCustomerList()) {
+            // Check uname & password
+            if (existingCust.getUname().equals(username) &&
+                    existingCust.getPassword().equals(password))
+                return existingCust;
+        }
+
+        // Since user name not found, append user to the current Customer list
+        Customer registeredCustomer = new Customer(name, username, password);
+        currentCustomers.getCustomerList().add(registeredCustomer);
+        XMLJavaReadWriters.writeToXML("Customers", System.getProperty("user.dir") + "\\src\\customers.xml", currentCustomers);
+        return registeredCustomer;
     }
 }

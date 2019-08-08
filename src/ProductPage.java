@@ -6,7 +6,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
 
-public class productPage extends JPanel {
+public class ProductPage extends JPanel {
     private JLabel jcomp1;
     private JButton jcomp2;
     private JList jcomp3;
@@ -17,7 +17,7 @@ public class productPage extends JPanel {
     private JComboBox jcomp8;
     private JMenuBar jcomp9;
 
-    public productPage() {
+    public ProductPage() {
         //construct preComponents
         String[] jcomp3Items = {"Acer Predator Helios 300"};
         String[] jcomp8Items = {"30 Days", "60 Days", "120 Days", "180 Days"};
@@ -72,10 +72,10 @@ public class productPage extends JPanel {
         jcomp9.setBounds(-5, 0, 360, 25);
     }
 
-    static void showPage2(){
+    static void showPage2() {
         JFrame frame = new JFrame("Product Page");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new productPage());
+        frame.getContentPane().add(new ProductPage());
         frame.pack();
         frame.setVisible(true);
     }
