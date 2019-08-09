@@ -101,35 +101,36 @@ public class ProductPage extends JPanel {
                 Products products = null;
                 try {
                     // Get selected product
-                    int months = Integer.parseInt(String.valueOf(comboBoxCostItem.getSelectedItem()));
-                    products = (Products) XMLJavaReadWriters.readFromXML("Products", System.getProperty("user.dir") + "\\src\\product.xml");
-                    Product selectedItem = products.getProductList().get(selectedItemIndex);
+                    try {
+                        int months = Integer.parseInt(String.valueOf(comboBoxCostItem.getSelectedItem()));
+                        products = (Products) XMLJavaReadWriters.readFromXML("Products", System.getProperty("user.dir") + "\\src\\product.xml");
+                        Product selectedItem = products.getProductList().get(selectedItemIndex);
 
-                    // add to user's account
-                    Product addP = new Product();
-                    addP.setName(selectedItem.getName());
-                    addP.setBrand(selectedItem.getBrand());
-                    addP.setDesc(selectedItem.getDesc());
-                    addP.setPrice(selectedItem.getPrice());
-                    addP.setMonths(Integer.parseInt(String.valueOf(comboBoxCostItem.getSelectedItem())));
-                    customer.getRentedProducts().getProductList().add(addP);
+                        // add to user's account
+                        Product addP = new Product();
+                        addP.setName(selectedItem.getName());
+                        addP.setBrand(selectedItem.getBrand());
+                        addP.setDesc(selectedItem.getDesc());
+                        addP.setPrice(selectedItem.getPrice());
+                        addP.setMonths(Integer.parseInt(String.valueOf(months)));
+                        customer.getRentedProducts().getProductList().add(addP);
 
-                    // Set Rental Amount
-                    double currRentalAmount = customer.getRentalAmount();
-                    labelRentalDue.setText(String.valueOf(currRentalAmount));
+                        // Set Rental Amount
+                        double currRentalAmount = customer.getRentalAmount();
+                        labelRentalDue.setText(String.valueOf(currRentalAmount));
 
-                    // Write User content to file.
-                    Customers custObjectList = (Customers)XMLJavaReadWriters.readFromXML("Customers", System.getProperty("user.dir")+"\\src\\customers.xml");
-                    ArrayList<Customer> cList = (ArrayList<Customer>)custObjectList.getCustomerList();
-                    for (Customer value : cList)    // Repalce the old customer details with the new customer details
-                        if (value.getUname().equals(customer.getUname())
-                                && value.getPassword().equals(customer.getPassword())) {
-                            custObjectList.getCustomerList().remove(value);
-                            custObjectList.getCustomerList().add(customer);
-                            break;
-                        }
-                    XMLJavaReadWriters.writeToXML("Customers", System.getProperty("user.dir")+"\\src\\customers.xml", custObjectList);
-
+                        // Write User content to file.
+                        Customers custObjectList = (Customers)XMLJavaReadWriters.readFromXML("Customers", System.getProperty("user.dir")+"\\src\\customers.xml");
+                        ArrayList<Customer> cList = (ArrayList<Customer>)custObjectList.getCustomerList();
+                        for (Customer value : cList)    // Repalce the old customer details with the new customer details
+                            if (value.getUname().equals(customer.getUname())
+                                    && value.getPassword().equals(customer.getPassword())) {
+                                custObjectList.getCustomerList().remove(value);
+                                custObjectList.getCustomerList().add(customer);
+                                break;
+                            }
+                        XMLJavaReadWriters.writeToXML("Customers", System.getProperty("user.dir")+"\\src\\customers.xml", custObjectList);
+                    }catch (ArrayIndexOutOfBoundsException ignored){}
                 } catch (FileNotFoundException | JAXBException | ClassNotFoundException ex) {
                     System.out.println(" PAGE 2 : ProductPage.java : Rental Item Selection Error ");
                     ex.getMessage();
@@ -142,7 +143,11 @@ public class ProductPage extends JPanel {
         buttonStatus.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent e) {
-               //StatusPanel.showStatusPanel(customer);
+               try {
+                   StatusPanel.showStatusPanel(customer);
+               } catch (FileNotFoundException | JAXBException | ClassNotFoundException ex) {
+                   ex.printStackTrace();
+               }
            }
        });
     }
