@@ -38,13 +38,23 @@ public class Products {
 @XmlAccessorType(XmlAccessType.FIELD)
 class Product {
     private String name, brand, desc;
-    private int price;
+    private int price, months;
     Product(){}
+
+    public int getMonths() {
+        return months;
+    }
+
+    public void setMonths(int months) {
+        this.months = months;
+    }
+
     public Product(String name, String brand, String desc, int price) {
         this.name = name;
         this.brand = brand;
         this.desc = desc;
         this.price = price;
+        this.months = 0;
     }
 
     public String getName() {

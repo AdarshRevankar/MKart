@@ -12,7 +12,7 @@ import java.util.List;
  */
 @XmlRootElement(name = "customers")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Customers {
+class Customers {
     @XmlElement(name = "customer")
     private List<Customer> customerList = null;
 
@@ -36,15 +36,24 @@ public class Customers {
 @XmlRootElement(name = "customer")
 @XmlAccessorType(XmlAccessType.FIELD)
 class Customer {
-    private String name, uname, password;
+    @XmlElement
+    private String name;
+    @XmlElement
+    private String uname;
+    @XmlElement
+    private String password;
+
+    private Products rentedProducts;
 
     Customer() {
+        this.rentedProducts = new Products();
     }
 
-    public Customer(String name, String uname, String password) {
+    Customer(String name, String uname, String password) {
         this.name = name;
         this.uname = uname;
         this.password = password;
+        this.rentedProducts = new Products();
     }
 
     @Override
@@ -52,17 +61,27 @@ class Customer {
         return "Customer Name :" + name;
     }
 
-
     public String getName() {
         return name;
     }
 
-    public String getUname() {
+    Products getRentedProducts() {
+        return rentedProducts;
+    }
+
+    String getUname() {
         return uname;
     }
 
-    public String getPassword() {
+    String getPassword() {
         return password;
     }
 
+    double getRentalAmount(){
+        double sum = 0;
+        for(Product prd:rentedProducts.getProductList())
+            sum += prd.getPrice() * prd.getMonths() + prd.getPrice() * 0.05 * 20. / prd.getMonths();
+        System.out.println(sum);
+        return sum;
+    }
 }

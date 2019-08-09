@@ -3,22 +3,22 @@ import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.swing.*;
-import javax.swing.event.*;
 import javax.xml.bind.JAXBException;
 
-public class LoginPage extends JPanel {
+class LoginPage extends JPanel {
     // Page1
     private JLabel jLabel, jLabel2, jLabel3;
-    private JTextField unameTf, pswdTf;
+    private JTextField unameTf;
+    private JPasswordField pswdTf;
     private JButton loginButton;
 
-    LoginPage() {
+    private LoginPage() {
         //construct components
         jLabel = new JLabel("MITE Kart");
         unameTf = new JTextField(5);
         jLabel2 = new JLabel("Username");
         jLabel3 = new JLabel("Password");
-        pswdTf = new JTextField(5);
+        pswdTf = new JPasswordField(5);
         loginButton = new JButton("Login");
 
         //adjust size and set layout
@@ -47,7 +47,7 @@ public class LoginPage extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 // Get Credentials
                 String userName = unameTf.getText();
-                String password = pswdTf.getText();
+                String password = String.valueOf(pswdTf.getPassword());
                 try {
                     currentCustomer[0] = authCustomer(userName.split("@")[0], userName, password);
                 } catch (IOException | ClassNotFoundException | JAXBException ex) {
@@ -65,9 +65,8 @@ public class LoginPage extends JPanel {
     private void NextPage(Customer cust) throws FileNotFoundException, JAXBException, ClassNotFoundException {
         System.out.println(cust);
         this.setVisible(false);
-        ProductPage.showPage2();
+        ProductPage.showPage2(cust);
     }
-
 
     static void start() {
         JFrame frame = new JFrame("M-Kart Rental Makes Easy");
