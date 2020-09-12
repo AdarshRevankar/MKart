@@ -6,10 +6,10 @@
         <password>123123</password>
         <rentedProducts>
             <product>
-                <name>Predator Helios 300</name>
-                <brand>Acer</brand>
-                <desc>1TB HDD</desc>
-                <price>2000</price>
+                <name>IPhone</name>
+                <brand>Apple</brand>
+                <desc>Bionic Chip</desc>
+                <price>1000</price>
                 <months>12</months>
             </product>
             <product>

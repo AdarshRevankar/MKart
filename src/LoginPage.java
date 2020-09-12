@@ -77,7 +77,7 @@ class LoginPage extends JPanel {
     }
 
     private static Customer authCustomer(String name, String username, String password) throws IOException, JAXBException, ClassNotFoundException {
-        Customers currentCustomers = (Customers) XMLJavaReadWriters.readFromXML("Customers", System.getProperty("user.dir") + "\\src\\customers.xml");
+        Customers currentCustomers = (Customers) XMLJavaReadWriters.readFromXML("Customers", System.getProperty("user.dir") + "/src/xml/customers.xml");
         for (Customer existingCust : currentCustomers.getCustomerList()) {
             // Check uname & password
             if (existingCust.getUname().equals(username) &&
@@ -88,7 +88,7 @@ class LoginPage extends JPanel {
         // Since user name not found, append user to the current Customer list
         Customer registeredCustomer = new Customer(name, username, password);
         currentCustomers.getCustomerList().add(registeredCustomer);
-        XMLJavaReadWriters.writeToXML("Customers", System.getProperty("user.dir") + "\\src\\customers.xml", currentCustomers);
+        XMLJavaReadWriters.writeToXML("Customers", System.getProperty("user.dir") + "/src/xml/customers.xml", currentCustomers);
         return registeredCustomer;
     }
 }

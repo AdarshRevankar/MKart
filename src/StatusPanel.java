@@ -4,9 +4,6 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
 import javax.swing.*;
 import javax.xml.bind.JAXBException;
 
@@ -72,7 +69,7 @@ class StatusPanel extends JPanel {
                 Customers custObjectList = null;
                 try {
                     // Read and add this customer and update the same here
-                    custObjectList = (Customers)XMLJavaReadWriters.readFromXML("Customers", System.getProperty("user.dir")+"\\src\\customers.xml");
+                    custObjectList = (Customers)XMLJavaReadWriters.readFromXML("Customers", System.getProperty("user.dir")+"/src/xml/customers.xml");
                     ArrayList<Customer> cList = (ArrayList<Customer>)custObjectList.getCustomerList();
                     for (Customer value : cList)    // Repalce the old customer details with the new customer details
                         if (value.getUname().equals(currentCust.getUname())
@@ -81,7 +78,7 @@ class StatusPanel extends JPanel {
                             custObjectList.getCustomerList().add(currentCust);
                             break;
                         }
-                    XMLJavaReadWriters.writeToXML("Customers", System.getProperty("user.dir")+"\\src\\customers.xml", custObjectList);
+                    XMLJavaReadWriters.writeToXML("Customers", System.getProperty("user.dir")+"/src/xml/customers.xml", custObjectList);
 
                     //refresh the list
                     jcomp2.setListData(fetchOptedItems());
@@ -119,7 +116,7 @@ class StatusPanel extends JPanel {
     static void showStatusPanel(Customer customer) throws FileNotFoundException, JAXBException, ClassNotFoundException {
 
         // Get new customer object. Concurrency maintanence
-        Customers custObjectList = (Customers)XMLJavaReadWriters.readFromXML("Customers", System.getProperty("user.dir")+"\\src\\customers.xml");
+        Customers custObjectList = (Customers)XMLJavaReadWriters.readFromXML("Customers", System.getProperty("user.dir")+"/src/xml/customers.xml");
         ArrayList<Customer> cList = (ArrayList<Customer>)custObjectList.getCustomerList();
         for (Customer c : cList)
             if (c.getUname().equals(customer.getUname())){
